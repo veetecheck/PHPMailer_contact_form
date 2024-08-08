@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <title>contact form</title>
+</head>
+
+<body class="bg-info">
+    <div class="container">
+        <h1 class="text-center display-4">Contact form</h1>
+
+        <div id="alert-placeholder"></div>
+
+        <form action="./send-mail.php" method="post" class="pt-2">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="oxymoron@example.com" required>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Your name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Miriama Oxymoron">
+            </div>
+            <div class="mb-3">
+                <label for="text" class="form-label">Your message</label>
+                <textarea class="form-control" id="text" name="text" rows="3" placeholder="Some text I wanna bother you with..."></textarea>
+            </div>
+            <button class="btn btn-warning">Send</button>
+        </form>
+    </div>
+
+    <script src="./bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const alertPlaceholder = document.querySelector('#alert-placeholder');
+
+            if (params.has('status')) {
+                let message = '';
+                let alertType = '';
+
+                if (params.get('status') === 'success') {
+                    message = 'Email has been sent successfully.';
+                    alertType = 'alert-success';
+                } else if (params.get('status') === 'error') {
+                    message = 'There was an error sending the email. Please try again.';
+                    alertType = 'alert-danger';
+                }
+
+                if (message) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = `alert ${alertType}`;
+                    alertDiv.role = 'alert';
+                    alertDiv.innerText = message;
+                    alertPlaceholder.appendChild(alertDiv);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
